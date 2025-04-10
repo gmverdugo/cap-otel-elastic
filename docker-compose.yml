@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  cap-app:
+    build: .
+    ports:
+      - "4004:4004"
+    environment:
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-collector:4318
+      OTEL_SERVICE_NAME: ${OTEL_SERVICE_NAME}
+      OTEL_SERVICE_VERSION: ${OTEL_SERVICE_VERSION}
+      OTEL_ENVIRONMENT: ${OTEL_ENVIRONMENT}
+    depends_on:
+      - otel-collector
+
+  otel-collector:
+    image: otel/opentelemetry-collector:0.97.0
+    container_name: otel-collector
+    restart: unless-stopped
+    ports:
+      - "4317:4317"  # OTLP/gRPC
+      - "4318:4318"  # OTLP/HTTP
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
+    environment:
+      ELASTIC_APM_SERVER_ENDPOINT: ${ELASTIC_APM_SERVER_ENDPOINT}
+      ELASTIC_APM_SECRET_TOKEN: ${ELASTIC_APM_SECRET_TOKEN}
+    command: ["--config=/etc/otel-collector-config.yaml"]

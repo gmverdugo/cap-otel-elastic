@@ -1,0 +1,21 @@
+{
+  "name": "cap-otel-app",
+  "version": "1.0.0",
+  "description": "SAP CAP app instrumentada con OpenTelemetry para Elastic",
+  "scripts": {
+    "start": "node start-cap.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "@sap/cds": "^7.2.2",
+    "dotenv": "^16.4.5",
+    "@opentelemetry/api": "1.7.0",
+    "@opentelemetry/sdk-node": "0.200.0",
+    "@opentelemetry/resources": "1.22.0",
+    "@opentelemetry/semantic-conventions": "1.22.0",
+    "@opentelemetry/exporter-trace-otlp-http": "0.200.0",
+    "@opentelemetry/auto-instrumentations-node": "0.57.1",
+    "pino": "^9.4.0",
+    "@opentelemetry/exporter-metrics-otlp-http": "0.200.0"
+  }
+}
